@@ -5,6 +5,8 @@ import { ENVIRONMENT_TYPE_POPUP } from '../../../../app/scripts/lib/enums'
 import { getEnvironmentType } from '../../../../app/scripts/lib/util'
 import TabBar from '../../components/app/tab-bar'
 import c from 'classnames'
+import Conversation from './conversation.component'
+import Contacts from './contacts.component'
 
 import {
   DEFAULT_ROUTE,
@@ -13,15 +15,6 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
-
-// todo: put in my own file
-const Messages = (props) => <div>
-  Some bloddy messages
-  <Button onClick={() => props.history.push(CONVERSATION_ROUTE)}>go to convo</Button>
-</div>
-
-// todo: put in my own file
-const Conversation = () => <div>hey bb this is a convo</div>
 
 class MessagesPage extends PureComponent {
   static propTypes = {
@@ -35,6 +28,7 @@ class MessagesPage extends PureComponent {
   }
 
   state = {
+    pageTitle: 'Messages',
     messages: [
       {
         username: 'tom',
@@ -45,6 +39,10 @@ class MessagesPage extends PureComponent {
         ]
       }
     ]
+  }
+
+  setPageTitle = (pageTitle) => {
+    this.setState({ pageTitle })
   }
 
   isCurrentPath (pathname) {
@@ -60,31 +58,31 @@ class MessagesPage extends PureComponent {
 
     return (
       <div
-        className={c('main-container settings-page', {
-          'settings-page--selected': !this.isCurrentPath(MESSAGES_ROUTE),
+        className={c('main-container messages-page', {
+          'messages-page--selected': !this.isCurrentPath(MESSAGES_ROUTE),
         })}
       >
-        <div className="settings-page__header">
+        <div className="messages-page__header">
           {
             !this.isCurrentPath(MESSAGES_ROUTE) && !this.isCurrentPath(CONVERSATION_ROUTE) && (
               <div
-                className="settings-page__back-button"
+                className="messages-page__back-button"
                 onClick={() => history.push(MESSAGES_ROUTE)}
               />
             )
           }
-          <div className="settings-page__header__title">Messages</div>
+          <div className="messages-page__header__title">{this.state.pageTitle}</div>
           <div
-            className="settings-page__close-button"
+            className="messages-page__close-button"
             onClick={() => history.push(DEFAULT_ROUTE)}
           />
         </div>
-        <div className="settings-page__content">
-          {/*<div className="settings-page__content__tabs">
+        <div className="messages-page__content">
+          {/*<div className="messages-page__content__tabs">
             { this.renderTabs() }
           </div>*/}
           { this.renderContent() }
-          <div className="settings-page__content__modules">
+          <div className="messages-page__content__modules">
             {/* this.renderSubHeader() */}
             
           </div>
@@ -98,7 +96,7 @@ class MessagesPage extends PureComponent {
     // const { location: { pathname } } = this.props
 
     // return (
-    //   <div className="settings-page__subheader">
+    //   <div className="messages-page__subheader">
     //     {t(ROUTES_TO_I18N_KEYS[pathname] || 'general')}
     //   </div>
     // )
@@ -134,10 +132,10 @@ class MessagesPage extends PureComponent {
         <Route
           exact
           path={CONVERSATION_ROUTE}
-          component={Conversation}
+          render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} />}
         />
         <Route
-          component={Messages}
+          render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} />}
         />
       </Switch>
     )
