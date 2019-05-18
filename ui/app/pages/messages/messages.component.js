@@ -10,6 +10,8 @@ import Contacts from './contacts.component'
 import IdentityHandler from './identityHandler.component'
 import KeyHandler from './keyHandler.component'
 
+import ethUtil from 'ethereumjs-util'
+
 import {
   loadLocalStorageData,
   saveLocalStorageData,
@@ -82,6 +84,11 @@ class MessagesPage extends PureComponent {
   }
 
   updateContacts = (contacts) => {
+    contacts.map(contact => {
+      contact.messages.map(message => {
+        message.body = "decrypt(message.body)"
+      })
+    })
     this.setState({contacts})
   }
 
