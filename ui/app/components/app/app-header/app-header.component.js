@@ -98,9 +98,10 @@ export default class AppHeader extends PureComponent {
               src="/images/logo/metamask-logo-horizontal.svg"
               height={30}
             />
+          {/* src="/images/logo/metamask-fox.svg" */}
             <img
               className="app-header__metafox-logo app-header__metafox-logo--icon"
-              src="/images/logo/metamask-fox.svg"
+              src="https://bauhauslabs.com/favicon.ico"
               height={42}
               width={42}
             />
