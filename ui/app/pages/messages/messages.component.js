@@ -24,6 +24,7 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
+const ecies = require("eth-ecies");
 
 class MessagesPage extends PureComponent {
   static propTypes = {
@@ -84,9 +85,17 @@ class MessagesPage extends PureComponent {
   }
 
   updateContacts = (contacts) => {
+    const randomMessage = `0x${loadLocalStorageData('random-message')}`
+
     contacts.map(contact => {
       contact.messages.map(message => {
-        message.body = "decrypt(message.body)"
+        const bufferEncryptedMessage = Buffer.from(message.body, 'base64');
+        // const hexEncryptedMessage = buffer.toString('hex')
+        // var message2 = new Buffer(hexEncryptedMessage, "hex")
+        var randomMessageBuffer = new Buffer(randomMessage, "hex")
+        var body = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage)
+
+        message.body = body
       })
     })
     this.setState({contacts})
