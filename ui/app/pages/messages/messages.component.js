@@ -36,7 +36,7 @@ class MessagesPage extends PureComponent {
         publicKey: '12030230ab2',
         messages: [
           { id: 1, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-          { id: 2, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+          { id: 2, body: 'Hows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
           { id: 3, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
           { id: 4, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
           { id: 5, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
