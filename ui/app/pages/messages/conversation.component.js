@@ -43,10 +43,6 @@ class Conversation extends PureComponent {
   }
 
   componentWillMount = () => {
-    // this.props.setPageTitle(activeContactAddress)
-    // get active convo address from local storage
-    // set convo address to title
-    // render all messages for that conversation
     const activeContactAddress = this.props.match.params.address
     const shortAddress = activeContactAddress.substring(0, 20)
     this.props.setPageTitle(shortAddress)
@@ -79,7 +75,6 @@ class Conversation extends PureComponent {
           </div>
         </div>
       </div>
-    
     )
   }
 }
