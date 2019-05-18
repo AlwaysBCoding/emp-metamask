@@ -35,8 +35,12 @@ class MessagesPage extends PureComponent {
         address: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E',
         publicKey: '12030230ab2',
         messages: [
-          { body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: Date.now(), status: 'read' },
-          { body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: Date.now(), status: 'read' }
+          { id: 1, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+          { id: 2, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+          { id: 3, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+          { id: 4, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+          { id: 5, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+          { id: 6, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
         ]
       },
       {
@@ -70,9 +74,6 @@ class MessagesPage extends PureComponent {
     const { t } = this.context
     const { history, location } = this.props
 
-    // const pathnameI18nKey = ROUTES_TO_I18N_KEYS[location.pathname]
-    // const isPopupView = getEnvironmentType(location.href) === ENVIRONMENT_TYPE_POPUP
-
     return (
       <div
         className={c('main-container messages-page', {
@@ -95,52 +96,12 @@ class MessagesPage extends PureComponent {
           />
         </div>
         <div className="messages-page__content">
-          {/*<div className="messages-page__content__tabs">
-            { this.renderTabs() }
-          </div>*/}
           { this.renderContent() }
           <div className="messages-page__content__modules">
-            {/* this.renderSubHeader() */}
-
           </div>
         </div>
       </div>
     )
-  }
-
-  renderSubHeader () {
-    // const { t } = this.context
-    // const { location: { pathname } } = this.props
-
-    // return (
-    //   <div className="messages-page__subheader">
-    //     {t(ROUTES_TO_I18N_KEYS[pathname] || 'general')}
-    //   </div>
-    // )
-  }
-
-  renderTabs () {
-    // const { history, location } = this.props
-    // const { t } = this.context
-
-    // return (
-    //   <TabBar
-    //     tabs={[
-    //       // { content: t('general'), description: t('generalSettingsDescription'), key: GENERAL_ROUTE },
-    //       // { content: t('advanced'), description: t('advancedSettingsDescription'), key: ADVANCED_ROUTE },
-    //       // { content: t('securityAndPrivacy'), description: t('securitySettingsDescription'), key: SECURITY_ROUTE },
-    //       // { content: t('networks'), description: t('networkSettingsDescription'), key: NETWORKS_ROUTE },
-    //       // { content: t('about'), description: t('aboutSettingsDescription'), key: ABOUT_US_ROUTE },
-    //     ]}
-    //     isActive={key => {
-    //       if (key === GENERAL_ROUTE && this.isCurrentPath(MESSAGES_ROUTE)) {
-    //         return true
-    //       }
-    //       return matchPath(location.pathname, { path: key, exact: true })
-    //     }}
-    //     onSelect={key => history.push(key)}
-    //   />
-    // )
   }
 
   renderContent () {

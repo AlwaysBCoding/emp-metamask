@@ -21,9 +21,15 @@ class Contacts extends PureComponent {
     setPageTitle:  PropTypes.func
   }
 
+  componentWillMount = () => {
+    this.props.setPageTitle('Messages')
+  }
+
   _renderContact(contact, index) {
     return (
-      <div className='contact' key={`contact-${index}`} onClick={() => props.history.push(`${CONVERSATION_ROUTE}/${contact.address}`)}>
+      <div className='contact' key={`contact-${index}`} 
+        onClick={() => this.props.history.push(`${CONVERSATION_ROUTE}/${contact.address}`)}
+      >
         <div className='identity'>
           <p className='username'>{contact.username}</p>
           <p className='address'>{contact.address}</p>
