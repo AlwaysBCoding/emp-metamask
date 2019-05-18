@@ -25,6 +25,8 @@ import {
 } from '../../../lib/local-storage-helpers'
 import Button from '../../components/ui/button'
 
+const extension = require('extensionizer')
+
 class Contacts extends PureComponent {
   static propTypes = {
     history: PropTypes.object,
@@ -38,7 +40,17 @@ class Contacts extends PureComponent {
   }
 
   componentWillMount = () => {
-    console.log('wecome t ocontacts')
+
+    extension.notifications.create(
+      "",
+      {
+      'type': 'basic',
+      'title': "New EMP Message" ,
+      'iconUrl': extension.extension.getURL('../../../../images/icon-64.png'),
+      'message': "0x123452346392592358209rcbbciofawedksfdsee",
+      }
+    )
+
     this.props.setPageTitle('Messages')
 
     const randomMessage = `0x${loadLocalStorageData('random-message')}`
@@ -46,7 +58,6 @@ class Contacts extends PureComponent {
     const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
 
     API.getMessagesForAddress({address}).then((res)=>{
-      console.log(res)
       this.props.updateContacts(res)
     })
   }

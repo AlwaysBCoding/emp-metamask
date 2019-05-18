@@ -64,3 +64,29 @@ export function lookupIdentityPublicKey({address}) {
 
   return deferred.promise
 }
+
+export function sendMessageToAddress({}) {
+  var deferred = Q.defer()
+  var headers = new Headers()
+  headers.append("Content-Type", "application/json")
+
+  var from = ""
+  var to = ""
+  var content = ""
+
+  var fetchConfig = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({ from, to, content })
+  }
+
+  fetch(`${API_ENDPOINT}/send-message-to-address`, fetchConfig)
+  .then((response) => {
+    deferred.resolve(response.json())
+  })
+  .catch((error) => {
+    deferred.reject(error)
+  })
+
+  return deferred.promise
+}
