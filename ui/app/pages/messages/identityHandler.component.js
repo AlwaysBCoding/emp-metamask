@@ -4,12 +4,13 @@ import { Switch, Route, matchPath, withRouter } from 'react-router-dom'
 import { ENVIRONMENT_TYPE_POPUP } from '../../../../app/scripts/lib/enums'
 import { getEnvironmentType } from '../../../../app/scripts/lib/util'
 
-const connect = require('react-redux').connect
-const actions = require('../../store/actions')
 import {
   loadLocalStorageData,
   saveLocalStorageData,
 } from '../../../lib/local-storage-helpers'
+
+import ethUtil from 'ethereumjs-util'
+import * as API from './api'
 
 import {
   DEFAULT_ROUTE,
@@ -19,53 +20,41 @@ import {
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
 
-const mapStateToProps = (state) => state
-
-function mapDispatchToProps (dispatch) {
-  return {
-    showExportPrivateKeyModal: () => {
-      dispatch(actions.showModal({ name: 'EXPORT_PRIVATE_KEY' }))
-    },
-    hideModal: () => dispatch(actions.hideModal()),
-  }
-}
-
 class IdentityHandler extends PureComponent {
-  state = {
-    listener: null
-  }
-
   checkIdentity = () => {
-    const randomMessage = loadLocalStorageData('random-message')
-    if (randomMessage) {
-      clearInterval(this.state.listener);
-      this.props.history.push(MESSAGES_ROUTE + '/contacts')
-      return true;
-    }
-    return false;
+    API.lookupIdentityPublicKey({address: ethUtil.privateToAddress(`0x${loadLocalStorageData('random-message')}`).toString('hex')})
+    .then((data) => {
+      if(data.status === 'ok') {
+        console.log('redirect to contacts route')
+        this.props.history.push(MESSAGES_ROUTE + '/contacts')
+      } else {
+        API.registerIdentity({
+          address: `0x${ethUtil.privateToAddress(`0x${loadLocalStorageData('random-message')}`).toString('hex')}`,
+          publicKey: `0x${ethUtil.privateToPublic(`0x${loadLocalStorageData('random-message')}`).toString('hex')}`
+        })
+        .then((data) => {
+          if(data.status === 'ok') {
+            console.log('redirect to contacts route')
+            this.props.history.push(MESSAGES_ROUTE + '/contacts')
+          } else {
+
+          }
+        })
+      }
+    })
   }
 
   componentDidMount = () => {
-    // waiting for local storage changes.
-    // i'm sorry, but this is a hackathon and I don't want to learn redux. 
-    if(!this.checkIdentity()) {
-      const listener = setInterval(this.checkIdentity, 500);
-      this.setState({listener});
-    }
+    this.checkIdentity()
   }
 
-  componentWillUnmount = () => { 
-    clearInterval(this.state.listener);
-  }
-  
   render() {
     return (
       <div>
-        To set up messaging, please enter your metamask password.
-        <Button onClick={()=> this.props.showExportPrivateKeyModal()}>I understand</Button>
+        loading....
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(IdentityHandler)
+export default IdentityHandler

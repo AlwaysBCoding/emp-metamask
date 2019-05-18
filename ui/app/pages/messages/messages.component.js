@@ -8,6 +8,8 @@ import c from 'classnames'
 import Conversation from './conversation.component'
 import Contacts from './contacts.component'
 import IdentityHandler from './identityHandler.component'
+import KeyHandler from './keyHandler.component'
+
 import {
   loadLocalStorageData,
   saveLocalStorageData,
@@ -34,37 +36,41 @@ class MessagesPage extends PureComponent {
 
   state = {
     pageTitle: 'Messages',
-    contacts: [
-      {
-        username: 'tom',
-        address: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E',
-        publicKey: '12030230ab2',
-        messages: [
-          { id: 1, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-          { id: 2, body: 'Hows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-          { id: 3, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-          { id: 4, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-          { id: 5, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-          { id: 6, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-        ]
-      },
-      {
-        username: 'alwaysbcoding',
-        address: '0x0e17989',
-        publicKey: '12030230ab2',
-        messages: [
-          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1558191688616, status: 'read' }
-        ]
-      },
-      {
-        username: 'freeslugs',
-        address: '0x09329823d',
-        publicKey: '12030230ab2',
-        messages: [
-          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1557191688616, status: 'read' }
-        ]
-      }
-    ]
+    // randomMessage: null,
+    // address: null,
+    // publicKey: null,
+    contacts: []
+    // contacts: [
+    //   {
+    //     username: 'tom',
+    //     address: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E',
+    //     publicKey: '12030230ab2',
+    //     messages: [
+    //       { id: 1, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+    //       { id: 2, body: 'Hows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+    //       { id: 3, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+    //       { id: 4, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+    //       { id: 5, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
+    //       { id: 6, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
+    //     ]
+    //   },
+    //   {
+    //     username: 'alwaysbcoding',
+    //     address: '0x0e17989',
+    //     publicKey: '12030230ab2',
+    //     messages: [
+    //       { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1558191688616, status: 'read' }
+    //     ]
+    //   },
+    //   {
+    //     username: 'freeslugs',
+    //     address: '0x09329823d',
+    //     publicKey: '12030230ab2',
+    //     messages: [
+    //       { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1557191688616, status: 'read' }
+    //     ]
+    //   }
+    // ]
   }
 
   setPageTitle = (pageTitle) => {
@@ -73,6 +79,10 @@ class MessagesPage extends PureComponent {
 
   isCurrentPath (pathname) {
     return this.props.location.pathname === pathname
+  }
+
+  updateContacts = (contacts) => {
+    this.setState({contacts})
   }
 
   render () {
@@ -118,9 +128,13 @@ class MessagesPage extends PureComponent {
         />
         <Route
           path={MESSAGES_ROUTE + '/contacts'}
-          render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts} />}
+          render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts} updateContacts={this.updateContacts} />}
         />
-        <Route component={IdentityHandler}/>
+        <Route
+          path={MESSAGES_ROUTE + '/check-identity'}
+          component={IdentityHandler}
+        />
+        <Route component={KeyHandler}/>
       </Switch>
     )
   }
