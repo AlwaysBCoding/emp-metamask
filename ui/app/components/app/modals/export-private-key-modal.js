@@ -12,6 +12,10 @@ const ReadOnlyInput = require('../../ui/readonly-input')
 const copyToClipboard = require('copy-to-clipboard')
 const { checksumAddress } = require('../../../helpers/utils/util')
 import Button from '../../ui/button'
+import {
+  loadLocalStorageData,
+  saveLocalStorageData,
+} from '../../../../lib/local-storage-helpers'
 
 function mapStateToPropsFactory () {
   let selectedIdentity = null
@@ -64,13 +68,17 @@ module.exports = connect(mapStateToPropsFactory, mapDispatchToProps)(ExportPriva
 
 
 ExportPrivateKeyModal.prototype.exportAccountAndGetPrivateKey = function (password, address) {
-  const { exportAccount } = this.props
+  const { exportAccount, hideModal } = this.props
 
   exportAccount(password, address)
-    .then(privateKey => this.setState({
-      privateKey,
-      showWarning: false,
-    }))
+    .then(privateKey => {
+      saveLocalStorageData(privateKey, 'random-message')
+      this.setState({
+        privateKey,
+        showWarning: false,
+      })
+      hideModal()
+    })
     .catch((e) => log.error(e))
 }
 

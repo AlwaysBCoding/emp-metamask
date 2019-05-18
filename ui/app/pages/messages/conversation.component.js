@@ -18,6 +18,7 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
+import TextField from '../../components/ui/text-field'
 
 const myAddress = '0x7A33615d12A12f58b25c653dc5E44188D44f6898'
 
@@ -68,6 +69,13 @@ class Conversation extends PureComponent {
             <div className="conversation-container">
               { messages.map((message, index) => <Message message={message} key={message.id} />) }  
             </div>
+          </div>
+          <div className='send-message'>
+            <TextField
+              className='send-message-textbox'
+              fullWidth
+              placeholder="Say something interesting"
+            />
           </div>
         </div>
       </div>

@@ -69,6 +69,8 @@
   }
 
   .chat-container {
+    display: flex;
+    flex-direction: column;
     height: 100%;
   }
 
@@ -155,8 +157,20 @@
     position: relative;
     z-index: 0;
     padding: 15px;
-    background: coral;
+    background: #efefef;
     height: 100%;
+    display: flex;
+    overflow: scroll;
+    flex: 1;
+  }
+
+  .send-message {
+    background: #efefef;
+    padding: 10px;
+  }
+
+  .send-message-textbox > div {
+    background: white;    
   }
 
   .conversation ::-webkit-scrollbar {
