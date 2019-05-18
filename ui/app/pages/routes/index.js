@@ -21,6 +21,7 @@ const { WALLET_VIEW_SIDEBAR } = require('../../components/app/sidebars/sidebar.c
 // other views
 import Home from '../home'
 import Settings from '../settings'
+import Messages from '../messages'
 import Authenticated from '../../helpers/higher-order-components/authenticated'
 import Initialized from '../../helpers/higher-order-components/initialized'
 import Lock from '../lock'
@@ -56,6 +57,7 @@ import {
   LOCK_ROUTE,
   UNLOCK_ROUTE,
   SETTINGS_ROUTE,
+  MESSAGES_ROUTE,
   REVEAL_SEED_ROUTE,
   MOBILE_SYNC_ROUTE,
   RESTORE_VAULT_ROUTE,
@@ -110,6 +112,7 @@ class Routes extends Component {
         <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
         <Authenticated path={MOBILE_SYNC_ROUTE} component={MobileSyncPage} exact />
         <Authenticated path={SETTINGS_ROUTE} component={Settings} />
+        <Authenticated path={MESSAGES_ROUTE} component={Messages} />
         <Authenticated path={`${CONFIRM_TRANSACTION_ROUTE}/:id?`} component={ConfirmTransaction} />
         <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
         <Authenticated path={ADD_TOKEN_ROUTE} component={AddTokenPage} exact />

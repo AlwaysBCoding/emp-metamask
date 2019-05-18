@@ -44,6 +44,9 @@ const CONFIRM_TRANSFER_FROM_PATH = '/transfer-from'
 const CONFIRM_TOKEN_METHOD_PATH = '/token-method'
 const SIGNATURE_REQUEST_PATH = '/signature-request'
 
+const MESSAGES_ROUTE = '/messages'
+const CONVERSATION_ROUTE = '/messages/conversation'
+
 module.exports = {
   DEFAULT_ROUTE,
   UNLOCK_ROUTE,
@@ -88,4 +91,6 @@ module.exports = {
   GENERAL_ROUTE,
   ABOUT_US_ROUTE,
   NETWORKS_ROUTE,
+  MESSAGES_ROUTE,
+  CONVERSATION_ROUTE,
 }

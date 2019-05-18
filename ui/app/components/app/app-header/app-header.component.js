@@ -2,7 +2,11 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Identicon from '../../ui/identicon'
-import { DEFAULT_ROUTE } from '../../../helpers/constants/routes'
+import { 
+  DEFAULT_ROUTE, 
+  ABOUT_US_ROUTE, 
+  MESSAGES_ROUTE
+} from '../../../helpers/constants/routes'
 const NetworkIndicator = require('../network')
 
 export default class AppHeader extends PureComponent {
@@ -98,7 +102,14 @@ export default class AppHeader extends PureComponent {
               src="/images/logo/metamask-logo-horizontal.svg"
               height={30}
             />
-          {/* src="/images/logo/metamask-fox.svg" */}
+          </div>
+          <div
+            className="app-header__logo-container"
+            onClick={(e) => {
+              /* src="/images/logo/metamask-fox.svg" */
+              history.push(MESSAGES_ROUTE)
+            }}
+          >
             <img
               className="app-header__metafox-logo app-header__metafox-logo--icon"
               src="https://bauhauslabs.com/favicon.ico"
