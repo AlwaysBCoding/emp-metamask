@@ -7,6 +7,12 @@ import TabBar from '../../components/app/tab-bar'
 import c from 'classnames'
 import Conversation from './conversation.component'
 import Contacts from './contacts.component'
+const connect = require('react-redux').connect
+const actions = require('../../store/actions')
+import {
+  loadLocalStorageData,
+  saveLocalStorageData,
+} from '../../../lib/local-storage-helpers'
 
 import {
   DEFAULT_ROUTE,
@@ -15,6 +21,42 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
+
+
+const mapStateToProps = (state) => state
+
+function mapDispatchToProps (dispatch) {
+  return {
+    showExportPrivateKeyModal: () => {
+      dispatch(actions.showModal({ name: 'EXPORT_PRIVATE_KEY' }))
+    },
+    hideModal: () => dispatch(actions.hideModal()),
+  }
+}
+
+class Login extends PureComponent {
+  
+  componentDidMount = () => {
+    const randomMessage = loadLocalStorageData('random-message')
+    if (randomMessage) {
+      this.props.history.push(MESSAGES_ROUTE + '/contacts')
+    } else {
+      console.log('ok. please login')
+    }
+  }
+  
+  render() {
+    return (
+      <div>
+        To set up messaging, please enter your metamask password.
+        <Button onClick={()=> this.props.showExportPrivateKeyModal()}>I understand</Button>
+      </div>
+    )
+  }
+}
+
+const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login)
+
 
 class MessagesPage extends PureComponent {
   static propTypes = {
@@ -112,11 +154,21 @@ class MessagesPage extends PureComponent {
           render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts}/>}
         />
         <Route
+          path={MESSAGES_ROUTE + '/contacts'}
           render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts} />}
+        />
+        <Route
+          render={(props) => <LoginComponent {...props} />}
         />
       </Switch>
     )
   }
 }
+
+
+  // componentDidMount = () => {
+  //   dispatch(actions.showModal({ name: 'EXPORT_PRIVATE_KEY' }))
+  // }
+
 
 export default withRouter(MessagesPage)
