@@ -29,13 +29,29 @@ class MessagesPage extends PureComponent {
 
   state = {
     pageTitle: 'Messages',
-    messages: [
+    contacts: [
       {
         username: 'tom',
         address: '0x744aa',
         publicKey: '12030230ab2',
         messages: [
           { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: Date.now(), status: 'read' }
+        ]
+      },
+      {
+        username: 'alwaysbcoding',
+        address: '0x0e17989',
+        publicKey: '12030230ab2',
+        messages: [
+          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1558191688616, status: 'read' }
+        ]
+      },
+      {
+        username: 'freeslugs',
+        address: '0x09329823d',
+        publicKey: '12030230ab2',
+        messages: [
+          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1557191688616, status: 'read' }
         ]
       }
     ]
@@ -84,7 +100,7 @@ class MessagesPage extends PureComponent {
           { this.renderContent() }
           <div className="messages-page__content__modules">
             {/* this.renderSubHeader() */}
-            
+
           </div>
         </div>
       </div>
@@ -135,7 +151,7 @@ class MessagesPage extends PureComponent {
           render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} />}
         />
         <Route
-          render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} />}
+          render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts} />}
         />
       </Switch>
     )
