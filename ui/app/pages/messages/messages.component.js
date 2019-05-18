@@ -29,13 +29,14 @@ class MessagesPage extends PureComponent {
 
   state = {
     pageTitle: 'Messages',
-    messages: [
+    contacts: [
       {
         username: 'tom',
-        address: '0x744aa',
+        address: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E',
         publicKey: '12030230ab2',
         messages: [
-          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: Date.now(), status: 'read' }
+          { body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: Date.now(), status: 'read' },
+          { body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: Date.now(), status: 'read' }
         ]
       }
     ]
@@ -130,9 +131,8 @@ class MessagesPage extends PureComponent {
     return (
       <Switch>
         <Route
-          exact
-          path={CONVERSATION_ROUTE}
-          render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} />}
+          path={CONVERSATION_ROUTE + '/:address'}
+          render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts}/>}
         />
         <Route
           render={(props) => <Contacts {...props} setPageTitle={this.setPageTitle} />}
