@@ -5,6 +5,12 @@ import { ENVIRONMENT_TYPE_POPUP } from '../../../../app/scripts/lib/enums'
 import { getEnvironmentType } from '../../../../app/scripts/lib/util'
 import c from 'classnames'
 import moment from 'moment'
+import * as API from './api'
+
+// API.getMessagesForAddress({address: '0x7564105e977516c53be337314c7e53838967bdac'})
+// .then((data) => {
+//   console.log(data)
+// })
 
 import {
   DEFAULT_ROUTE,
@@ -27,7 +33,7 @@ class Contacts extends PureComponent {
 
   _renderContact(contact, index) {
     return (
-      <div className='contact' key={`contact-${index}`} 
+      <div className='contact' key={`contact-${index}`}
         onClick={() => this.props.history.push(`${CONVERSATION_ROUTE}/${contact.address}`)}
       >
         <div className='identity'>
