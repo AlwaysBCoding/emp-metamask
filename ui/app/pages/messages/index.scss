@@ -10,6 +10,7 @@
     padding: 12px 24px;
     align-items: center;
     flex: 0 0 auto;
+    border-bottom: 1px solid #e5e5e5;
 
     &__title {
       flex: 1 1 auto;
@@ -22,6 +23,38 @@
     font-size: 40px;
     color: $dusty-gray;
     cursor: pointer;
+  }
+
+  .contacts {
+
+    .contact {
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #d2d8dd;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #e5e5e5;
+      }
+
+      .identity {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .timestamp {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+    }
+
   }
 
 }
