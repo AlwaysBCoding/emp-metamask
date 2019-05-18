@@ -48,6 +48,10 @@ class Conversation extends PureComponent {
     this.props.setPageTitle(shortAddress)
   }
 
+  encryptMessage = (message) => {
+    
+  }
+
   render() {
     const activeContactAddress = this.props.match.params.address
     const contacts = this.props.contacts

@@ -46,6 +46,7 @@ class Contacts extends PureComponent {
     const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
 
     API.getMessagesForAddress({address}).then((res)=>{
+      console.log(res)
       this.props.updateContacts(res)
     })
   }

@@ -85,16 +85,13 @@ class MessagesPage extends PureComponent {
   }
 
   updateContacts = (contacts) => {
-    const randomMessage = `0x${loadLocalStorageData('random-message')}`
-
+    const randomMessage = loadLocalStorageData('random-message')
+    
     contacts.map(contact => {
       contact.messages.map(message => {
         const bufferEncryptedMessage = Buffer.from(message.body, 'base64');
-        // const hexEncryptedMessage = buffer.toString('hex')
-        // var message2 = new Buffer(hexEncryptedMessage, "hex")
         var randomMessageBuffer = new Buffer(randomMessage, "hex")
-        var body = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage)
-
+        var body = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
         message.body = body
       })
     })
