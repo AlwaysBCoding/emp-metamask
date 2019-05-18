@@ -34,6 +34,19 @@ class MessagesPage extends PureComponent {
     t: PropTypes.func,
   }
 
+  state = {
+    messages: [
+      {
+        username: 'tom',
+        address: '0x744aa',
+        publicKey: '12030230ab2',
+        messages: [
+          { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: Date.now(), status: 'read' }
+        ]
+      }
+    ]
+  }
+
   isCurrentPath (pathname) {
     return this.props.location.pathname === pathname
   }
