@@ -51,10 +51,6 @@ class Conversation extends PureComponent {
     this.setState({ myAddress: address, myPublicKey: publicKey })
   }
 
-  // encryptMessage = (message) => {
-
-  // }
-
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -91,12 +87,8 @@ class Conversation extends PureComponent {
   render() {
     const activeContactAddress = this.props.match.params.address
     const contacts = this.props.contacts
-      // console.log(`contacts: ${contacts}`)
-      // console.log(`activeContactAddress: ${activeContactAddress}`)
     const activeContact = contacts.find((contact) => contact.address === activeContactAddress)
-      // console.log(`activeContact: ${activeContact}`)
     const messages = activeContact.messages
-      // console.log(`messages: ${messages}`)
 
     return (
       <div className="chat">
