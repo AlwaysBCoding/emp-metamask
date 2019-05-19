@@ -1,4 +1,5 @@
 var Q = require('Q')
+var ecies = require('eth-ecies');
 const API_ENDPOINT = "http://alwaysbcoding.ngrok.io"
 
 export function registerIdentity({address, publicKey}) {
@@ -60,6 +61,42 @@ export function lookupIdentityPublicKey({address}) {
   })
   .catch((error) => {
     deferred.reject(error)
+  })
+
+  return deferred.promise
+}
+
+export function sendMessageToAddress({ from, to, message, publicKey }) {
+  var deferred = Q.defer()
+  var headers = new Headers()
+  headers.append("Content-Type", "application/json")
+
+  this.lookupIdentityPublicKey({address: to})
+  .then((data) => {
+    var content = ecies.encrypt(
+      new Buffer(data.publicKey.substring(2), 'hex'),
+      new Buffer(message)
+    ).toString('base64')
+
+    var content2 = ecies.encrypt(
+      new Buffer(publicKey.substring(2), 'hex'),
+      new Buffer(message)
+    ).toString('base64')
+
+    var fetchConfig = {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({ from, to, content, content2 })
+    }
+
+    fetch(`${API_ENDPOINT}/send-message-to-address`, fetchConfig)
+    .then((response) => {
+      deferred.resolve(response.json())
+    })
+    .catch((error) => {
+      deferred.reject(error)
+    })
+
   })
 
   return deferred.promise

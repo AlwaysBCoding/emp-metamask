@@ -38,7 +38,6 @@ class Contacts extends PureComponent {
   }
 
   componentWillMount = () => {
-    console.log('wecome t ocontacts')
     this.props.setPageTitle('Messages')
 
     const randomMessage = `0x${loadLocalStorageData('random-message')}`
