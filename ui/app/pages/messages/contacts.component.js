@@ -75,11 +75,11 @@ class Contacts extends PureComponent {
       >
         <div className='identity'>
           <p className='username'>{contact.username}</p>
-          <p className='address'>{contact.address}</p>
+          <p className='address'>{contact.address.substring(0, 20)}</p>
         </div>
-        <div className='timestamp'>
+        {/*<div className='timestamp'>
           <p className='timestamp'>{contact.messages.length > 0 ? moment(contact.messages[0].createdAt).fromNow() : ''}</p>
-        </div>
+        </div>*/}
       </div>
     )
   }
