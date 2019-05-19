@@ -67,7 +67,7 @@ class MessagesPage extends PureComponent {
           message.body = null
         }
       })
-      contact.messages = contact.messages.filter(m => m.body != null)
+      contact.messages = contact.messages.filter(m => m.body != null).sort(function(a,b){return a.createdAt - b.createdAt});
       // console.log('contact')
       // console.log(contact)
       return contact
@@ -117,7 +117,7 @@ class MessagesPage extends PureComponent {
       <Switch>
         <Route
           path={CONVERSATION_ROUTE + '/:address'}
-          render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts}/>}
+          render={(props) => <Conversation {...props} setPageTitle={this.setPageTitle} contacts={this.state.contacts} updateContacts={this.updateContacts} />}
         />
         <Route
           path={MESSAGES_ROUTE + '/contacts'}

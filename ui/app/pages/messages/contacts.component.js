@@ -102,8 +102,6 @@ class Contacts extends PureComponent {
   }
 
   _renderContacts() {
-    console.log('render contacts')
-    console.log(this.state.contacts)
     return this.state.contacts.map((contact, index) => {
       return this._renderContact(contact, index);
     })
@@ -123,7 +121,8 @@ class Contacts extends PureComponent {
             value={this.state.query}
           />
         </form>
-        {this._renderContacts()}
+        { this.state.query.length > 3 && <p>Press enter to send message to { this.state.query }</p> }
+        { this._renderContacts() }
       </div>
     )
   }

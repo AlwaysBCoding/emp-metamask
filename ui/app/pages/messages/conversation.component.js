@@ -51,9 +51,13 @@ class Conversation extends PureComponent {
     this.setState({ myAddress: address, myPublicKey: publicKey })
   }
 
-  componentDidMount = () => {
+  scrollToBottom = () => {
     var element = document.getElementById("conversation");
     element.scrollTop = element.scrollHeight;
+  }
+
+  componentDidMount = () => {
+    this.scrollToBottom()
   }
 
   onSubmit = (e) => {
@@ -67,6 +71,10 @@ class Conversation extends PureComponent {
       message: message
     })
     .then((data) => {
+      API.getMessagesForAddress({address: this.state.myAddress}).then((res)=>{
+        this.props.updateContacts(res)
+        this.scrollToBottom()
+      })
     })
 
     this.setState({message: ""})
@@ -84,6 +92,7 @@ class Conversation extends PureComponent {
   }
 
   _renderMessages(messages) {
+    // .reverse()
     return messages.map((message, index) => {
       return this._renderMessage(message, index);
     })
@@ -93,7 +102,7 @@ class Conversation extends PureComponent {
     const activeContactAddress = this.props.match.params.address
     const contacts = this.props.contacts
     const activeContact = contacts.find((contact) => contact.address === activeContactAddress)
-    const messages = activeContact.messages.reverse();
+    const messages = activeContact.messages
 
     return (
       <div className="chat">
