@@ -22,10 +22,9 @@ import Button from '../../components/ui/button'
 
 class IdentityHandler extends PureComponent {
   checkIdentity = () => {
-    API.lookupIdentityPublicKey({address: ethUtil.privateToAddress(`0x${loadLocalStorageData('random-message')}`).toString('hex')})
+    API.lookupIdentityPublicKey({address: `0x${ethUtil.privateToAddress(`0x${loadLocalStorageData('random-message')}`).toString('hex')}`})
     .then((data) => {
       if(data.status === 'ok') {
-        console.log('redirect to contacts route')
         this.props.history.push(MESSAGES_ROUTE + '/contacts')
       } else {
         API.registerIdentity({
@@ -34,10 +33,9 @@ class IdentityHandler extends PureComponent {
         })
         .then((data) => {
           if(data.status === 'ok') {
-            console.log('redirect to contacts route')
             this.props.history.push(MESSAGES_ROUTE + '/contacts')
           } else {
-
+            console.log('err register identtiy')
           }
         })
       }
@@ -51,7 +49,7 @@ class IdentityHandler extends PureComponent {
   render() {
     return (
       <div>
-        loading....
+        on identity handler, loading....
       </div>
     )
   }
