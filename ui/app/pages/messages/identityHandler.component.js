@@ -19,9 +19,15 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
+import Spinner from '../../components/ui/spinner'
 
 class IdentityHandler extends PureComponent {
   checkIdentity = () => {
+    // todo Refactor
+    // const randomMessage = `0x${loadLocalStorageData('random-message')}`
+    // const address = `0x${ethUtil.privateToAddress(randomMessage).toString('hex')}`
+    // const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
+
     API.lookupIdentityPublicKey({address: `0x${ethUtil.privateToAddress(`0x${loadLocalStorageData('random-message')}`).toString('hex')}`})
     .then((data) => {
       if(data.status === 'ok') {
@@ -49,7 +55,7 @@ class IdentityHandler extends PureComponent {
   render() {
     return (
       <div>
-        on identity handler, loading....
+        <Spinner />
       </div>
     )
   }

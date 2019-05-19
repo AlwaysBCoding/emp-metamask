@@ -51,6 +51,15 @@ class Conversation extends PureComponent {
     this.setState({ myAddress: address, myPublicKey: publicKey })
   }
 
+  scrollToBottom = () => {
+    var element = document.getElementById("conversation");
+    element.scrollTop = element.scrollHeight;
+  }
+
+  componentDidMount = () => {
+    this.scrollToBottom()
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -62,6 +71,10 @@ class Conversation extends PureComponent {
       message: message
     })
     .then((data) => {
+      API.getMessagesForAddress({address: this.state.myAddress}).then((res)=>{
+        this.props.updateContacts(res)
+        this.scrollToBottom()
+      })
     })
 
     this.setState({message: ""})
@@ -72,13 +85,14 @@ class Conversation extends PureComponent {
       <div key={`message-${index}`} className={c('message', { received: (message.to === this.state.myAddress), sent: (message.from === this.state.myAddress) } )}>
         { message.body }
         <span className="metadata">
-          <span className="time">{ moment(message.createdAt).format('h:mm A') }<Tick /></span>
+          <span className="time">{ moment(message.createdAt * 1000).format('h:mm A') }<Tick /></span>
         </span>
       </div>
     )
   }
 
   _renderMessages(messages) {
+    // .reverse()
     return messages.map((message, index) => {
       return this._renderMessage(message, index);
     })
@@ -93,7 +107,7 @@ class Conversation extends PureComponent {
     return (
       <div className="chat">
         <div className="chat-container">
-          <div className="conversation">
+          <div className="conversation" id="conversation">
             <div className="conversation-container">
               {this._renderMessages(messages)}
             </div>

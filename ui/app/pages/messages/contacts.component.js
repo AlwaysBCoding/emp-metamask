@@ -73,9 +73,9 @@ class Contacts extends PureComponent {
           <p className='username'>{contact.username}</p>
           <p className='address'>{contact.address.substring(0, 20)}</p>
         </div>
-        {/*<div className='timestamp'>
-          <p className='timestamp'>{contact.messages.length > 0 ? moment(contact.messages[0].createdAt).fromNow() : ''}</p>
-        </div>*/}
+        <div className='timestamp'>
+          <p className='timestamp'>{contact.messages.length > 0 ? moment(contact.messages[0].createdAt * 1000).fromNow() : ''}</p>
+        </div>
       </div>
     )
   }
@@ -116,7 +116,8 @@ class Contacts extends PureComponent {
             value={this.state.query}
           />
         </form>
-        {this._renderContacts()}
+        { this.state.query.length > 3 && <p>Press enter to send message to { this.state.query }</p> }
+        { this._renderContacts() }
       </div>
     )
   }
