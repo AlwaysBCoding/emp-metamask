@@ -43,37 +43,6 @@ class MessagesPage extends PureComponent {
     // address: null,
     // publicKey: null,
     contacts: []
-    // contacts: [
-    //   {
-    //     username: 'tom',
-    //     address: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E',
-    //     publicKey: '12030230ab2',
-    //     messages: [
-    //       { id: 1, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-    //       { id: 2, body: 'Hows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating youHows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-    //       { id: 3, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-    //       { id: 4, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-    //       { id: 5, body: 'hey bro', from: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', to: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', createdAt: 1558191688616, status: 'read' },
-    //       { id: 6, body: 'Hows life treating you', from: '0x7002f1dCa3e8592411E985791128CA7C3c9eE60E', to: '0x7A33615d12A12f58b25c653dc5E44188D44f6898', createdAt: 1558191688616, status: 'read' },
-    //     ]
-    //   },
-    //   {
-    //     username: 'alwaysbcoding',
-    //     address: '0x0e17989',
-    //     publicKey: '12030230ab2',
-    //     messages: [
-    //       { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1558191688616, status: 'read' }
-    //     ]
-    //   },
-    //   {
-    //     username: 'freeslugs',
-    //     address: '0x09329823d',
-    //     publicKey: '12030230ab2',
-    //     messages: [
-    //       { body: 'hey bro', from: '0x744aa', to: '0x222aaa', createdAt: 1557191688616, status: 'read' }
-    //     ]
-    //   }
-    // ]
   }
 
   setPageTitle = (pageTitle) => {
@@ -89,9 +58,9 @@ class MessagesPage extends PureComponent {
 
     contacts.map(contact => {
       contact.messages.map(message => {
-        const bufferEncryptedMessage = Buffer.from(message.body, 'base64');
-        var randomMessageBuffer = new Buffer(randomMessage, "hex")
         try {
+          const bufferEncryptedMessage = Buffer.from(message.body, 'base64');
+          var randomMessageBuffer = new Buffer(randomMessage, "hex")
           var body = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
           message.body = body
         } catch(e) {
@@ -99,8 +68,12 @@ class MessagesPage extends PureComponent {
         }
       })
       contact.messages = contact.messages.filter(m => m.body != null)
+      console.log('contact')
+      console.log(contact)
       return contact
     })
+    console.log('contacts')
+    console.log(contacts)
 
     this.setState({contacts})
   }
