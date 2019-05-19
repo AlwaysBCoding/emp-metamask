@@ -36,7 +36,8 @@ class Contacts extends PureComponent {
 
   state = {
     loading: true,
-    contacts: []
+    contacts: [],
+    query: ''
   }
 
   componentWillMount = () => {
@@ -53,6 +54,7 @@ class Contacts extends PureComponent {
   }
 
   filterContacts = (s) => {
+    this.setState({query: s})
     let contacts = this.props.contacts
     contacts = contacts.filter((c) => c.address.includes(s.toLowerCase()))
     this.setState({contacts})
@@ -74,6 +76,26 @@ class Contacts extends PureComponent {
     )
   }
 
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const query = this.state.query;
+
+    // find user's identity
+    // create fake messages
+    // then redirect to user path
+    // this.props.history.push(`${CONVERSATION_ROUTE}/${contact.address}`)}
+
+    // API.sendMessageToAddress({
+    //   from: this.state.myAddress,
+    //   publicKey: this.state.myPublicKey,
+    //   to: this.props.match.params.address,
+    //   message: message
+    // })
+    // .then((data) => {
+    // })
+  }
+
   _renderContacts() {
     return this.state.contacts.map((contact, index) => {
       return this._renderContact(contact, index);
@@ -85,12 +107,15 @@ class Contacts extends PureComponent {
 
     return (
       <div className='contacts'>
-        <TextField
-          className='filter-contacts'
-          fullWidth
-          placeholder="Who's your fave address"
-          onChange={(event) => this.filterContacts(event.target.value)}
-        />
+        <form onSubmit={this.onSubmit}>
+          <TextField
+            className='filter-contacts'
+            fullWidth
+            placeholder="Who's your fave address"
+            onChange={(event) => this.filterContacts(event.target.value)}
+            value={this.state.query}
+          />
+        </form>
         {this._renderContacts()}
       </div>
     )
