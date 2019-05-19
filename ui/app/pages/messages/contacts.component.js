@@ -36,7 +36,7 @@ class Contacts extends PureComponent {
 
   state = {
     loading: true,
-    contacts: this.props.contacts
+    contacts: []
   }
 
   componentWillMount = () => {
@@ -48,6 +48,7 @@ class Contacts extends PureComponent {
 
     API.getMessagesForAddress({address}).then((res)=>{
       this.props.updateContacts(res)
+      this.setState({contacts: this.props.contacts})
     })
   }
 
