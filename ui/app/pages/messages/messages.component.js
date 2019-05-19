@@ -94,17 +94,13 @@ class MessagesPage extends PureComponent {
         try {
           var body = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
           message.body = body
-          console.log('end of try')
         } catch(e) {
           message.body = null
-          console.log('end of catch')
         }
       })
       contact.messages = contact.messages.filter(m => m.body != null)
       return contact
     })
-
-    console.log(contacts)
 
     this.setState({contacts})
   }
