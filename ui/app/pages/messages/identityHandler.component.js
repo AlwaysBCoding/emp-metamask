@@ -19,6 +19,7 @@ import {
   MESSAGES_ROUTE
 } from '../../helpers/constants/routes'
 import Button from '../../components/ui/button'
+import Spinner from '../../components/ui/spinner'
 
 class IdentityHandler extends PureComponent {
   checkIdentity = () => {
@@ -54,7 +55,7 @@ class IdentityHandler extends PureComponent {
   render() {
     return (
       <div>
-        on identity handler, loading....
+        <Spinner />
       </div>
     )
   }
