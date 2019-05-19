@@ -68,12 +68,12 @@ class MessagesPage extends PureComponent {
         }
       })
       contact.messages = contact.messages.filter(m => m.body != null)
-      console.log('contact')
-      console.log(contact)
+      // console.log('contact')
+      // console.log(contact)
       return contact
     })
-    console.log('contacts')
-    console.log(contacts)
+    // console.log('contacts')
+    // console.log(contacts)
 
     this.setState({contacts})
   }

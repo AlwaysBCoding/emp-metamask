@@ -77,7 +77,7 @@ class Conversation extends PureComponent {
       <div key={`message-${index}`} className={c('message', { received: (message.to === this.state.myAddress), sent: (message.from === this.state.myAddress) } )}>
         { message.body }
         <span className="metadata">
-          <span className="time">{ moment(message.createdAt).format('h:mm A') }<Tick /></span>
+          <span className="time">{ moment(message.createdAt * 1000).format('h:mm A') }<Tick /></span>
         </span>
       </div>
     )
@@ -93,7 +93,7 @@ class Conversation extends PureComponent {
     const activeContactAddress = this.props.match.params.address
     const contacts = this.props.contacts
     const activeContact = contacts.find((contact) => contact.address === activeContactAddress)
-    const messages = activeContact.messages
+    const messages = activeContact.messages.reverse();
 
     return (
       <div className="chat">
