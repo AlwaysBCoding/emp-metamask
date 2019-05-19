@@ -76,28 +76,23 @@ class MessagesPage extends PureComponent {
           saveLocalStorageData(serverEtag, 'contacts-etag')
           API.getMessagesForAddress({address: address})
           .then((data) => {
-            console.log('CHECK 1')
             if(data[0].messages[0].from != address) {
-              console.log('CHECK 2')
-              this._sendNotification({title: data[0].messages[0].from, message: '...'})
-              const bufferEncryptedMessage = Buffer.from(data[0].messages[0].body, 'base64')
-              console.log(bufferEncryptedMessage)
-              var randomMessageBuffer = new Buffer(randomMessage.substring(2), "hex")
-              console.log(randomMessageBuffer)
-              try {
-                var decryptedMessage = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
-                console.log(decryptedMessage)
-                this._sendNotification({title: data[0].messages[0].from, message: decryptedMessage})
-              } catch (e) {
-                console.log('got error')
-                console.log(e)
-              }
+              this._sendNotification({title: 'New message', message: data[0].messages[0].from})
+              // const bufferEncryptedMessage = Buffer.from(data[0].messages[0].body, 'base64')
+              // var randomMessageBuffer = new Buffer(randomMessage.substring(2), "hex")
+              // try {
+              //   var decryptedMessage = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
+              //   this._sendNotification({title: data[0].messages[0].from, message: decryptedMessage})
+              // } catch (e) {
+              //   console.log('got error')
+              //   console.log(e)
+              // }
             }
             this.updateContacts(data)
           })
         }
       })
-    }, 5000)
+    }, 2000)
   }
 
   setPageTitle = (pageTitle) => {
