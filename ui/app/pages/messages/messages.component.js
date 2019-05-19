@@ -9,6 +9,8 @@ import Conversation from './conversation.component'
 import Contacts from './contacts.component'
 import IdentityHandler from './identityHandler.component'
 import KeyHandler from './keyHandler.component'
+import * as API from './api'
+const extension = require('extensionizer')
 
 import ethUtil from 'ethereumjs-util'
 
@@ -45,6 +47,59 @@ class MessagesPage extends PureComponent {
     contacts: []
   }
 
+  _sendNotification = ({title, message}) => {
+    extension.notifications.create(
+      '',
+      {
+      'type': 'basic',
+      'title': title,
+      'iconUrl': extension.extension.getURL('../../../../images/icon-64.png'),
+      'message': message
+      }
+    )
+  }
+
+  componentWillMount = () => {
+    const randomMessage = `0x${loadLocalStorageData('random-message')}`
+    const address = `0x${ethUtil.privateToAddress(randomMessage).toString('hex')}`
+    const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
+
+    setInterval(() => {
+      var storageEtag, serverEtag;
+      storageEtag = loadLocalStorageData('contacts-etag')
+      API.getMessagesEtagForAddress({address: address})
+      .then((data) => {
+        serverEtag = data.etag;
+        if(!storageEtag) {
+          saveLocalStorageData(serverEtag, 'contacts-etag')
+        } else if(serverEtag != storageEtag) {
+          saveLocalStorageData(serverEtag, 'contacts-etag')
+          API.getMessagesForAddress({address: address})
+          .then((data) => {
+            console.log('CHECK 1')
+            if(data[0].messages[0].from != address) {
+              console.log('CHECK 2')
+              this._sendNotification({title: data[0].messages[0].from, message: '...'})
+              const bufferEncryptedMessage = Buffer.from(data[0].messages[0].body, 'base64')
+              console.log(bufferEncryptedMessage)
+              var randomMessageBuffer = new Buffer(randomMessage.substring(2), "hex")
+              console.log(randomMessageBuffer)
+              try {
+                var decryptedMessage = ecies.decrypt(randomMessageBuffer, bufferEncryptedMessage).toString()
+                console.log(decryptedMessage)
+                this._sendNotification({title: data[0].messages[0].from, message: decryptedMessage})
+              } catch (e) {
+                console.log('got error')
+                console.log(e)
+              }
+            }
+            this.updateContacts(data)
+          })
+        }
+      })
+    }, 5000)
+  }
+
   setPageTitle = (pageTitle) => {
     this.setState({ pageTitle })
   }
@@ -68,12 +123,8 @@ class MessagesPage extends PureComponent {
         }
       })
       contact.messages = contact.messages.filter(m => m.body != null)
-      console.log('contact')
-      console.log(contact)
       return contact
     })
-    console.log('contacts')
-    console.log(contacts)
 
     this.setState({contacts})
   }
