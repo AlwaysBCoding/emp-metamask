@@ -45,6 +45,27 @@ export function getMessagesForAddress({address}) {
   return deferred.promise
 }
 
+export function getMessagesEtagForAddress({address}) {
+  var deferred = Q.defer()
+  var headers = new Headers()
+  headers.append("Content-Type", "application/json")
+
+  var fetchConfig = {
+    method: "GET",
+    headers: headers
+  }
+
+  fetch(`${API_ENDPOINT}/messages/${address}/etag`, fetchConfig)
+  .then((response) => {
+    deferred.resolve(response.json())
+  })
+  .catch((error) => {
+    deferred.reject(error)
+  })
+
+  return deferred.promise
+}
+
 export function lookupIdentityPublicKey({address}) {
   var deferred = Q.defer()
   var headers = new Headers()
@@ -84,7 +105,7 @@ export function sendMessageToAddress({ from, to, message, publicKey }) {
         new Buffer(message)
       ).toString('base64')
     }
-    
+
     var fetchConfig = {
       method: "POST",
       headers: headers,

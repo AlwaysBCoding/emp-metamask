@@ -52,11 +52,7 @@ class Contacts extends PureComponent {
     this.setState({ myAddress: address, myPublicKey: publicKey })
 
     API.getMessagesForAddress({address}).then((res)=>{
-      console.log('res')
-      console.log(res)
       this.props.updateContacts(res)
-      console.log('this.props.contacts')
-      console.log(this.props.contacts)
       this.setState({contacts: this.props.contacts})
     })
   }
@@ -96,7 +92,6 @@ class Contacts extends PureComponent {
       message: ''
     })
     .then((data) => {
-      console.log('done!')
       this.props.history.push(`${CONVERSATION_ROUTE}/${query}`)
     })
   }
