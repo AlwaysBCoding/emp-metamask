@@ -24,6 +24,7 @@ import {
   saveLocalStorageData,
 } from '../../../lib/local-storage-helpers'
 import Button from '../../components/ui/button'
+import TextField from '../../components/ui/text-field'
 
 class Contacts extends PureComponent {
   static propTypes = {
@@ -35,10 +36,10 @@ class Contacts extends PureComponent {
 
   state = {
     loading: true,
+    contacts: this.props.contacts
   }
 
   componentWillMount = () => {
-    console.log('wecome t ocontacts')
     this.props.setPageTitle('Messages')
 
     const randomMessage = `0x${loadLocalStorageData('random-message')}`
@@ -46,9 +47,14 @@ class Contacts extends PureComponent {
     const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
 
     API.getMessagesForAddress({address}).then((res)=>{
-      console.log(res)
       this.props.updateContacts(res)
     })
+  }
+
+  filterContacts = (s) => {
+    let contacts = this.props.contacts
+    contacts = contacts.filter((c) => c.address.includes(s.toLowerCase()))
+    this.setState({contacts})
   }
 
   _renderContact(contact, index) {
@@ -68,7 +74,7 @@ class Contacts extends PureComponent {
   }
 
   _renderContacts() {
-    return this.props.contacts.map((contact, index) => {
+    return this.state.contacts.map((contact, index) => {
       return this._renderContact(contact, index);
     })
   }
@@ -78,8 +84,13 @@ class Contacts extends PureComponent {
 
     return (
       <div className='contacts'>
+        <TextField
+          className='filter-contacts'
+          fullWidth
+          placeholder="Who's your fave address"
+          onChange={(event) => this.filterContacts(event.target.value)}
+        />
         {this._renderContacts()}
-        {/*loading ? <div>loading...</div> : */}
       </div>
     )
   }
