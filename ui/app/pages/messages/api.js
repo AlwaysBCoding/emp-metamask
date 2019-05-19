@@ -70,19 +70,21 @@ export function sendMessageToAddress({ from, to, message, publicKey }) {
   var deferred = Q.defer()
   var headers = new Headers()
   headers.append("Content-Type", "application/json")
+  var content, content2;
 
   this.lookupIdentityPublicKey({address: to})
   .then((data) => {
-    var content = ecies.encrypt(
-      new Buffer(data.publicKey.substring(2), 'hex'),
-      new Buffer(message)
-    ).toString('base64')
-
-    var content2 = ecies.encrypt(
-      new Buffer(publicKey.substring(2), 'hex'),
-      new Buffer(message)
-    ).toString('base64')
-
+    if(message.length > 0) {
+      content = ecies.encrypt(
+        new Buffer(data.publicKey.substring(2), 'hex'),
+        new Buffer(message)
+      ).toString('base64')
+      content2 = ecies.encrypt(
+        new Buffer(publicKey.substring(2), 'hex'),
+        new Buffer(message)
+      ).toString('base64')
+    }
+    
     var fetchConfig = {
       method: "POST",
       headers: headers,

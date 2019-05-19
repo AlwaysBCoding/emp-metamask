@@ -37,7 +37,9 @@ class Contacts extends PureComponent {
   state = {
     loading: true,
     contacts: [],
-    query: ''
+    query: '',
+    myAddress: '',
+    publicKey: ''
   }
 
   componentWillMount = () => {
@@ -46,6 +48,8 @@ class Contacts extends PureComponent {
     const randomMessage = `0x${loadLocalStorageData('random-message')}`
     const address = `0x${ethUtil.privateToAddress(randomMessage).toString('hex')}`
     const publicKey = `0x${ethUtil.privateToPublic(randomMessage).toString('hex')}`
+
+    this.setState({ myAddress: address, myPublicKey: publicKey })
 
     API.getMessagesForAddress({address}).then((res)=>{
       this.props.updateContacts(res)
@@ -81,19 +85,15 @@ class Contacts extends PureComponent {
 
     const query = this.state.query;
 
-    // find user's identity
-    // create fake messages
-    // then redirect to user path
-    // this.props.history.push(`${CONVERSATION_ROUTE}/${contact.address}`)}
-
-    // API.sendMessageToAddress({
-    //   from: this.state.myAddress,
-    //   publicKey: this.state.myPublicKey,
-    //   to: this.props.match.params.address,
-    //   message: message
-    // })
-    // .then((data) => {
-    // })
+    API.sendMessageToAddress({
+      from: this.state.myAddress,
+      publicKey: this.state.myPublicKey,
+      to: query,
+      message: ''
+    })
+    .then((data) => {
+      this.props.history.push(`${CONVERSATION_ROUTE}/${query}`)
+    })
   }
 
   _renderContacts() {
