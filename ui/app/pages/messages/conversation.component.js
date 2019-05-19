@@ -51,6 +51,11 @@ class Conversation extends PureComponent {
     this.setState({ myAddress: address, myPublicKey: publicKey })
   }
 
+  componentDidMount = () => {
+    var element = document.getElementById("conversation");
+    element.scrollTop = element.scrollHeight;
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -93,7 +98,7 @@ class Conversation extends PureComponent {
     return (
       <div className="chat">
         <div className="chat-container">
-          <div className="conversation">
+          <div className="conversation" id="conversation">
             <div className="conversation-container">
               {this._renderMessages(messages)}
             </div>
